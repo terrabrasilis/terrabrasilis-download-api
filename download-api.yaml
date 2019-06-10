@@ -1,0 +1,38 @@
+version: '3.2'
+services:
+  download-api:
+    image: terrabrasilis/download-api:v01
+    ports:
+      - "3001"
+    secrets:
+      - download.api.secret
+      - postgres.user.download.api
+      - postgres.pass.download.api
+      - postgres.database-homo.download.api
+      - postgres.host.download.api
+      - postgres.port.download.api
+    environment:
+      DOWNLOAD_API_SECRET: /run/secrets/download.api.secret
+      PG_USER_DOWNLOAD_API_SECRET: /run/secrets/postgres.user.download.api
+      PG_PASSWORD_DOWNLOAD_API_SECRET: /run/secrets/postgres.pass.download.api
+      PG_DATABASE_DOWNLOAD_API_SECRET: /run/secrets/postgres.database-homo.download.api
+      PG_HOST_DOWNLOAD_API_SECRET: /run/secrets/postgres.host.download.api
+      PG_PORT_DOWNLOAD_API_SECRET: /run/secrets/postgres.port.download.api
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+
+secrets:
+  download.api.secret:
+    external: true
+  postgres.user.download.api:
+    external: true
+  postgres.database-homo.download.api:
+    external: true
+  postgres.host.download.api:
+    external: true
+  postgres.port.download.api:
+    external: true
+  postgres.pass.download.api:
+    external: true
